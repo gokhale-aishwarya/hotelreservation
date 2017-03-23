@@ -243,7 +243,11 @@ CREATE TABLE `user_info` (
 --
 -- Indexes for dumped tables
 --
-
+CREATE TABLE `login` (
+  `id` int(11) NOT NULL ,
+  `user_email` int(11) NOT NULL,
+  `user_password` int(11) NOT NULL
+) ;
 --
 -- Indexes for table `admin_info`
 --
@@ -299,6 +303,12 @@ ALTER TABLE `room_service`
   ADD PRIMARY KEY (`id`),
   ADD KEY `room_id` (`room_id`) USING BTREE,
   ADD KEY `service_id` (`service_id`);
+  
+  
+  ALTER TABLE `login`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_email` (`user_email`) USING BTREE,
+  ADD KEY `user_password` (`user_password`);
 
 --
 -- Indexes for table `room_type`
@@ -379,6 +389,10 @@ ALTER TABLE `service`
 --
 ALTER TABLE `user_info`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  
+  
+  ALTER TABLE `login`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- Constraints for dumped tables
 --
@@ -409,6 +423,10 @@ ALTER TABLE `room_exception`
 ALTER TABLE `room_service`
   ADD CONSTRAINT `room_service_ibfk_1` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`),
   ADD CONSTRAINT `room_service_ibfk_2` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`);
+  
+   ALTER TABLE `login`
+  ADD CONSTRAINT `login_ibfk_1` FOREIGN KEY (`user_email`) REFERENCES `user` (`email`),
+  ADD CONSTRAINT `login_ibfk_2` FOREIGN KEY (`user_password`) REFERENCES `user` (`password`);
 
 
 ALTER TABLE `room` ADD FOREIGN KEY (`room_type_id`) REFERENCES `hotel_management`.`room_type`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
